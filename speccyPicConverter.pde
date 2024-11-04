@@ -11,10 +11,10 @@ boolean bw = false;
 ZXImageConverter z;
 
 void settings() {
-  //input = loadImage("data\\IMG_1059.JPG");
+  input = loadImage("data\\IMG_1059.JPG");
   
   
-  size(512, 192);
+  size(512*2, 192*2);
 }
 
 
@@ -40,13 +40,16 @@ void draw() {
   if (cam.available() == true) {
     cam.read();
   }
-  cam.resize(xMax,yMax);  
-  PImage showThis = blurThis(blurThis(blurThis(cam)));
-  image(cam, 0, 0);
-  z=new ZXImageConverter(showThis);
+  //cam.resize(512,192*2);  
+  PImage cloneThis = cam.copy(); //blurThis(blurThis(blurThis(cam)));
+  PImage showThis = cam.copy();//cam.resize(512,192*2);
+  showThis.resize(512,192*2);
+  image(showThis, 0, 0);
+  z=new ZXImageConverter(cloneThis);
   z.bw=bw;
   zxImage=z.convert();
-  image(zxImage, 256, 0);
+  zxImage.resize(512,192*2);
+  image(zxImage, 512, 0);
 }
 
 void keyPressed() {
